@@ -1,7 +1,0 @@
-#h2 인메모리 데이터베이스로 설정
-spring:
-  datasource:
-    url: jdbc:h2:mem:mydb
-    username: pass_local
-    password: passlocal123
-    driver-class-name: org.h2.Driver
