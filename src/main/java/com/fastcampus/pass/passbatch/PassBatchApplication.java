@@ -38,9 +38,9 @@ public class PassBatchApplication {
 	}
 
 	@Bean
-	public Job passJob(JobRepository jobRepository, Step passStep) {
+	public Job passJob(JobRepository jobRepository, Tasklet testTasklet, PlatformTransactionManager platformTransactionManager) {
 		return new JobBuilder("passJob", jobRepository)
-				.start(passStep)
+				.start(passStep(jobRepository, testTasklet, platformTransactionManager))
 				.build();
 	}
 
