@@ -29,19 +29,19 @@ public class PassBatchApplication {
 		});
 	}
 
-	// JobRepository를 명시적으로 제공하는 방식을 사용하길 권장한다.
+	// job 생성
+	@Bean
+	public Job passJob(JobRepository jobRepository, Step passStep) {
+		return new JobBuilder("passJob", jobRepository)
+				.start(passStep)
+				.build();
+	}
+
+	// step 생성
 	@Bean
 	public Step passStep(JobRepository jobRepository, Tasklet testTasklet, PlatformTransactionManager platformTransactionManager){
 		return new StepBuilder("passStep", jobRepository)
 				.tasklet(testTasklet, platformTransactionManager)
 				.build();
 	}
-
-	@Bean
-	public Job passJob(JobRepository jobRepository, Tasklet testTasklet, PlatformTransactionManager platformTransactionManager) {
-		return new JobBuilder("passJob", jobRepository)
-				.start(passStep(jobRepository, testTasklet, platformTransactionManager))
-				.build();
-	}
-
 }
